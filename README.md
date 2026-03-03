@@ -1,6 +1,6 @@
-# Light Weight Fitness Gym - Premium Website
+# FITNESS GYM PREMIUM - Premium Website
 
-A modern, premium fitness website for **Light Weight Fitness Gym** located in New Vellanur, Tamil Nadu, India.
+A modern, premium fitness website for **FITNESS GYM PREMIUM** - Your ultimate fitness destination.
 
 ![Gym Website Preview](https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800)
 
@@ -106,9 +106,9 @@ gym-demo/
 
 ### Update Contact Info
 Search and replace these placeholders across all HTML files:
-- Phone: `+919876543210`
-- Email: `info@lightweightfitness.com`
-- Address: `Main Road, New Vellanur, Tamil Nadu`
+- Phone: `+911234567890`
+- Email: `info@fitnessgympremium.com`
+- Address: `123 Demo Street, Example City, 000000`
 
 ### Update Branding
 Edit CSS variables in `css/styles.css`:
@@ -141,8 +141,8 @@ Replace Unsplash placeholder URLs with actual gym photos.
 
 ## 📄 License
 
-All rights reserved © 2026 Light Weight Fitness Gym
+All rights reserved © 2026 FITNESS GYM PREMIUM
 
 ---
 
-**Designed with ❤️ in New Vellanur, Tamil Nadu**
+**Designed with ❤️ for Fitness**

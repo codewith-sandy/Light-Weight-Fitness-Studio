@@ -1,5 +1,5 @@
 /* ========================================
-   LIGHT WEIGHT FITNESS GYM - JAVASCRIPT
+   FITNESS GYM PREMIUM - JAVASCRIPT
    ======================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -236,8 +236,8 @@ function initFormHandler() {
                 submitBtn.disabled = false;
                 
                 // Optional: Send WhatsApp message
-                const whatsappMessage = `Hi! I'm ${data.name}. I'm interested in joining Light Weight Fitness Gym. My goal is ${data.goal}. My phone number is ${data.phone}.`;
-                // window.open(`https://wa.me/919876543210?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
+                const whatsappMessage = `Hi! I'm ${data.name}. I'm interested in joining FITNESS GYM PREMIUM. My goal is ${data.goal}. My phone number is ${data.phone}.`;
+                // window.open(`https://wa.me/911234567890?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
                 
             }, 1500);
         });
@@ -760,4 +760,4 @@ function initFAQ() {
     }
 }
 
-console.log('💪 Light Weight Fitness Gym - Website Loaded Successfully!');
+console.log('💪 FITNESS GYM PREMIUM - Website Loaded Successfully!');
