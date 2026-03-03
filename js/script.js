@@ -2,10 +2,14 @@
    FITNESS GYM PREMIUM - JAVASCRIPT
    ======================================== */
 
+// WhatsApp Configuration
+const WHATSAPP_NUMBER = '918668163718'; // Light Weight Fitness Gym
+
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize all components
     initPreloader();
     initNavigation();
+    initDynamicHeaderHeight(); // Dynamic header height for hero spacing
     initScrollAnimations();
     initBackToTop();
     initSmoothScroll();
@@ -13,7 +17,68 @@ document.addEventListener('DOMContentLoaded', () => {
     initCounterAnimation();
     initGalleryFilter();
     initFAQ();
+    initHeroVideo();
 });
+
+/* ========================================
+   DYNAMIC HEADER HEIGHT (Prevents navbar overlap)
+   ======================================== */
+
+function initDynamicHeaderHeight() {
+    const announcementBar = document.getElementById('announcement-bar');
+    const navbar = document.getElementById('navbar');
+    const hero = document.querySelector('.hero');
+    const sections = document.querySelectorAll('section[id]');
+    
+    function calculateAndApplyHeaderHeight() {
+        let totalHeaderHeight = 0;
+        
+        // Calculate announcement bar height if present
+        if (announcementBar) {
+            totalHeaderHeight += announcementBar.offsetHeight;
+        }
+        
+        // Calculate navbar height
+        if (navbar) {
+            totalHeaderHeight += navbar.offsetHeight;
+        }
+        
+        // Add buffer for breathing room
+        const buffer = 20;
+        const finalHeight = totalHeaderHeight + buffer;
+        
+        // Apply to CSS custom property for global use
+        document.documentElement.style.setProperty('--header-height', `${finalHeight}px`);
+        
+        // Apply padding to hero section
+        if (hero) {
+            hero.style.paddingTop = `${finalHeight}px`;
+        }
+        
+        // Apply scroll-margin-top to all sections for anchor links
+        sections.forEach(section => {
+            section.style.scrollMarginTop = `${finalHeight}px`;
+        });
+    }
+    
+    // Run on initial load
+    calculateAndApplyHeaderHeight();
+    
+    // Run on window resize (debounced for performance)
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(calculateAndApplyHeaderHeight, 100);
+    });
+    
+    // Run on orientation change (mobile)
+    window.addEventListener('orientationchange', () => {
+        setTimeout(calculateAndApplyHeaderHeight, 200);
+    });
+    
+    // Expose function globally for menu toggle updates
+    window.updateHeaderHeight = calculateAndApplyHeaderHeight;
+}
 
 /* ========================================
    PRELOADER
@@ -67,6 +132,11 @@ function initNavigation() {
         hamburger.classList.toggle('active');
         navMenu.classList.toggle('active');
         document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+        
+        // Update header height calculation when menu toggles
+        if (typeof window.updateHeaderHeight === 'function') {
+            setTimeout(window.updateHeaderHeight, 50);
+        }
     });
     
     // Close menu on link click
@@ -187,62 +257,359 @@ function initSmoothScroll() {
 }
 
 /* ========================================
-   FORM HANDLER
+   HERO VIDEO INITIALIZATION
    ======================================== */
+
+function initHeroVideo() {
+    const video = document.getElementById('hero-video');
+    
+    if (video) {
+        // Add loaded class when video can play
+        video.addEventListener('canplay', () => {
+            video.classList.add('loaded');
+        });
+        
+        // Fallback if video is already loaded
+        if (video.readyState >= 3) {
+            video.classList.add('loaded');
+        }
+        
+        // Handle video loading errors gracefully
+        video.addEventListener('error', () => {
+            console.log('Video loading failed, showing fallback image');
+            video.style.display = 'none';
+        });
+        
+        // Pause video when not visible for performance
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    video.play().catch(() => {});
+                } else {
+                    video.pause();
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        observer.observe(video);
+    }
+}
+
+/* ========================================
+   CONTACT FORM HANDLER (Email + WhatsApp)
+   ======================================== */
+
+// Owner contact details
+const OWNER_EMAIL = 'lightweightfitnessgym@gmail.com';
 
 function initFormHandler() {
     const form = document.getElementById('lead-form');
+    const emailBtn = document.getElementById('send-email-btn');
+    const whatsappBtn = document.getElementById('send-whatsapp-btn');
+    const formStatus = document.getElementById('form-status');
     
-    if (form) {
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
+    if (!form) return;
+    
+    // Clear all errors
+    function clearErrors() {
+        const errorSpans = form.querySelectorAll('.field-error');
+        errorSpans.forEach(span => {
+            span.textContent = '';
+            span.classList.remove('show');
+        });
+        
+        const inputs = form.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            input.classList.remove('error');
+        });
+    }
+    
+    // Show field error
+    function showFieldError(fieldId, message) {
+        const errorSpan = document.getElementById(`${fieldId}-error`);
+        const field = document.getElementById(fieldId);
+        
+        if (errorSpan) {
+            errorSpan.textContent = message;
+            errorSpan.classList.add('show');
+        }
+        if (field) {
+            field.classList.add('error');
+        }
+    }
+    
+    // Show status message
+    function showStatus(message, type = 'success') {
+        if (formStatus) {
+            formStatus.textContent = message;
+            formStatus.className = `form-status ${type}`;
+            formStatus.classList.add('show');
             
-            // Get form data
-            const formData = new FormData(form);
-            const data = {
-                name: formData.get('name'),
-                phone: formData.get('phone'),
-                goal: formData.get('goal')
-            };
-            
-            // Validate phone number (basic Indian format)
-            const phoneRegex = /^[6-9]\d{9}$/;
-            const cleanPhone = data.phone.replace(/\D/g, '');
-            
-            if (!phoneRegex.test(cleanPhone)) {
-                showNotification('Please enter a valid 10-digit phone number', 'error');
-                return;
-            }
-            
-            // Show loading state
-            const submitBtn = form.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
-            submitBtn.disabled = true;
-            
-            // Simulate form submission (replace with actual API call)
+            // Auto-hide after 3 seconds
             setTimeout(() => {
-                // Log data for demo purposes
-                console.log('Form submitted:', data);
+                formStatus.classList.remove('show');
+            }, 3000);
+        }
+    }
+    
+    // Validate form
+    function validateForm() {
+        clearErrors();
+        let isValid = true;
+        
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const plan = document.getElementById('plan').value;
+        
+        // Validate Name
+        if (!name) {
+            showFieldError('name', 'Please enter your full name');
+            isValid = false;
+        } else if (name.length < 2) {
+            showFieldError('name', 'Name must be at least 2 characters');
+            isValid = false;
+        }
+        
+        // Validate Email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email) {
+            showFieldError('email', 'Please enter your email address');
+            isValid = false;
+        } else if (!emailRegex.test(email)) {
+            showFieldError('email', 'Please enter a valid email address');
+            isValid = false;
+        }
+        
+        // Validate Phone
+        const phoneRegex = /^[6-9]\d{9}$/;
+        const cleanPhone = phone.replace(/\D/g, '');
+        if (!phone) {
+            showFieldError('phone', 'Please enter your phone number');
+            isValid = false;
+        } else if (!phoneRegex.test(cleanPhone)) {
+            showFieldError('phone', 'Please enter a valid 10-digit phone number');
+            isValid = false;
+        }
+        
+        // Validate Plan
+        if (!plan) {
+            showFieldError('plan', 'Please select a plan or service');
+            isValid = false;
+        }
+        
+        return isValid;
+    }
+    
+    // Get form data
+    function getFormData() {
+        const planValue = document.getElementById('plan').value;
+        const planParts = planValue.split('|');
+        const planKey = planParts[0] || '';
+        const planDisplay = planParts[1] || '';
+        
+        return {
+            name: document.getElementById('name').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            phone: document.getElementById('phone').value.trim(),
+            planKey: planKey,
+            planDisplay: planDisplay,
+            message: document.getElementById('message').value.trim()
+        };
+    }
+    
+    // Generate formatted message
+    function generateMessage(data) {
+        let message = `New Gym Membership Enquiry\n\n`;
+        message += `Name: ${data.name}\n`;
+        message += `Email: ${data.email}\n`;
+        message += `Phone: ${data.phone}\n`;
+        message += `Selected Plan: ${data.planDisplay}\n`;
+        if (data.message) {
+            message += `\nAdditional Message:\n${data.message}\n`;
+        }
+        message += `\n---\nSent from Light Weight Fitness Gym Website`;
+        return message;
+    }
+    
+    // Generate WhatsApp message
+    function generateWhatsAppMessage(data) {
+        let message = `🏋️ *New Gym Membership Enquiry*\n\n`;
+        message += `📋 *Contact Details:*\n`;
+        message += `━━━━━━━━━━━━━━━\n`;
+        message += `👤 Name: ${data.name}\n`;
+        message += `📧 Email: ${data.email}\n`;
+        message += `📱 Phone: ${data.phone}\n`;
+        message += `💳 Selected Plan: ${data.planDisplay}\n`;
+        if (data.message) {
+            message += `\n💬 *Additional Message:*\n${data.message}\n`;
+        }
+        message += `━━━━━━━━━━━━━━━\n\n`;
+        message += `_Sent from Light Weight Fitness Gym Website_`;
+        return message;
+    }
+    
+    // Handle Email button click
+    if (emailBtn) {
+        emailBtn.addEventListener('click', () => {
+            if (!validateForm()) return;
+            
+            const data = getFormData();
+            const message = generateMessage(data);
+            const subject = 'New Gym Membership Enquiry';
+            
+            // Create mailto URL
+            const mailtoURL = `mailto:${OWNER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+            
+            // Show status message
+            showStatus('Redirecting to Email...', 'info');
+            
+            // Open email client
+            setTimeout(() => {
+                window.location.href = mailtoURL;
+            }, 500);
+        });
+    }
+    
+    // Handle WhatsApp button click
+    if (whatsappBtn) {
+        whatsappBtn.addEventListener('click', () => {
+            if (!validateForm()) return;
+            
+            const data = getFormData();
+            const message = generateWhatsAppMessage(data);
+            
+            // Create WhatsApp URL
+            const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            
+            // Show status message
+            showStatus('Opening WhatsApp...', 'info');
+            
+            // Open WhatsApp in new tab
+            setTimeout(() => {
+                window.open(whatsappURL, '_blank');
+            }, 500);
+        });
+    }
+    
+    // Clear errors on input
+    const inputs = form.querySelectorAll('input, textarea');
+    inputs.forEach(input => {
+        input.addEventListener('input', () => {
+            const errorSpan = document.getElementById(`${input.id}-error`);
+            if (errorSpan) {
+                errorSpan.textContent = '';
+                errorSpan.classList.remove('show');
+            }
+            input.classList.remove('error');
+        });
+    });
+    
+    // Clear error on plan select change + auto-fill message
+    const planSelect = document.getElementById('plan');
+    const messageField = document.getElementById('message');
+    let userHasTyped = false; // Track if user manually edited the message
+    let lastAutoMessage = ''; // Track last auto-generated message
+    
+    // Detect manual user input in message field
+    if (messageField) {
+        messageField.addEventListener('input', () => {
+            // If the current value differs from the last auto-message, user has edited
+            if (messageField.value.trim() !== lastAutoMessage.trim()) {
+                userHasTyped = true;
+            }
+        });
+    }
+    
+    if (planSelect) {
+        planSelect.addEventListener('change', () => {
+            // Clear error
+            const errorSpan = document.getElementById('plan-error');
+            if (errorSpan) {
+                errorSpan.textContent = '';
+                errorSpan.classList.remove('show');
+            }
+            planSelect.classList.remove('error');
+            
+            // Auto-fill message based on selected plan
+            const planValue = planSelect.value;
+            if (planValue && messageField) {
+                const planParts = planValue.split('|');
+                const planKey = planParts[0];
+                const planDisplay = planParts[1] || '';
                 
-                // Show success message
-                showNotification('Thank you! We will contact you within 24 hours.', 'success');
+                const autoMessages = {
+                    'basic': `I am interested in joining the Basic Plan (₹999/month). Please share further details about what's included.`,
+                    'standard': `I am interested in joining the Standard Plan (₹1499/month). Please share further details and benefits.`,
+                    'premium': `I would like to enroll in the Premium Plan (₹1999/month). Kindly provide full membership details.`,
+                    'personal': `I am interested in Personal Training. Please contact me with available trainers and pricing options.`
+                };
                 
-                // Reset form
-                form.reset();
+                const newMessage = autoMessages[planKey] || '';
                 
-                // Reset button
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-                
-                // Optional: Send WhatsApp message
-                const whatsappMessage = `Hi! I'm ${data.name}. I'm interested in joining FITNESS GYM PREMIUM. My goal is ${data.goal}. My phone number is ${data.phone}.`;
-                // window.open(`https://wa.me/911234567890?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
-                
-            }, 1500);
+                // Only auto-fill if user hasn't manually typed, or field is empty, or still contains a previous auto-message
+                if (!userHasTyped || !messageField.value.trim() || messageField.value.trim() === lastAutoMessage.trim()) {
+                    // Subtle fade transition
+                    messageField.style.opacity = '0.5';
+                    setTimeout(() => {
+                        messageField.value = newMessage;
+                        lastAutoMessage = newMessage;
+                        userHasTyped = false; // Reset flag since we just auto-filled
+                        messageField.style.opacity = '1';
+                    }, 150);
+                }
+            } else if (!planValue && messageField) {
+                // Clear auto-message when plan is deselected
+                if (!userHasTyped || messageField.value.trim() === lastAutoMessage.trim()) {
+                    messageField.value = '';
+                    lastAutoMessage = '';
+                    userHasTyped = false;
+                }
+            }
         });
     }
 }
+
+/* ========================================
+   SUCCESS MODAL
+   ======================================== */
+
+function showSuccessModal() {
+    const modal = document.getElementById('success-modal');
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeSuccessModal() {
+    const modal = document.getElementById('success-modal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// Close modal on outside click
+document.addEventListener('click', (e) => {
+    const modal = document.getElementById('success-modal');
+    if (modal && e.target === modal) {
+        closeSuccessModal();
+    }
+});
+
+// Close modal on Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeSuccessModal();
+    }
+});
+
+/* ========================================
+   FORM HANDLER
+   ======================================== */
+
+/* (Removed duplicate - merged above) */
 
 /* ========================================
    NOTIFICATION SYSTEM
