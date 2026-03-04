@@ -2,7 +2,7 @@
 
 A modern, premium fitness website for **FITNESS GYM PREMIUM** - Your ultimate fitness destination.
 
-![Gym Website Preview](https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800)
+![Gym Website Preview](photos/gym overview.jpg)
 
 ## 🏋️ Overview
 
@@ -122,7 +122,7 @@ Edit CSS variables in `css/styles.css`:
 ```
 
 ### Update Images
-Replace Unsplash placeholder URLs with actual gym photos.
+All gym images use local photos from the `/photos` folder. Testimonial member avatars use placeholder services.
 
 ## 📈 SEO Features
 

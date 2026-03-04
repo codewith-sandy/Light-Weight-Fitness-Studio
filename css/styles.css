@@ -503,7 +503,7 @@ section[id] {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920') center/cover no-repeat;
+    background: url('../photos/gym overview.jpg') center/cover no-repeat;
 }
 
 .hero-overlay {
@@ -1159,11 +1159,17 @@ section[id] {
 }
 
 /* ========================================
-   TESTIMONIALS SECTION
+   GOOGLE REVIEWS SECTION
    ======================================== */
 
-.testimonials {
+.google-reviews {
     background: var(--bg-dark);
+    overflow: hidden;
+}
+
+.google-reviews .section-tag i {
+    margin-right: 6px;
+    color: #4285F4;
 }
 
 .overall-rating {
@@ -1190,72 +1196,139 @@ section[id] {
     color: var(--text-muted);
 }
 
-.testimonials-slider {
+.reviews-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+    gap: 24px;
 }
 
-.testimonial-card {
+.review-card {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
-    padding: 35px;
+    padding: 28px;
     transition: all var(--transition-normal);
+    position: relative;
 }
 
-.testimonial-card:hover {
-    border-color: var(--primary);
+.review-card::before {
+    content: '\201C';
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    font-size: 3.5rem;
+    font-family: Georgia, serif;
+    color: var(--primary);
+    opacity: 0.15;
+    line-height: 1;
+}
+
+.review-card:hover {
+    border-color: rgba(225, 6, 0, 0.4);
     transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(225, 6, 0, 0.08);
 }
 
-.testimonial-rating {
-    margin-bottom: 20px;
+.review-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
 }
 
-.testimonial-rating i {
+.reviewer-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.reviewer-avatar span {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.reviewer-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.reviewer-info h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-white);
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.review-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.review-stars i {
     color: #FFD700;
-    font-size: 1rem;
+    font-size: 0.75rem;
 }
 
-.testimonial-text {
+.review-source {
+    color: #4285F4;
+    font-size: 0.85rem;
+}
+
+.review-text {
     color: var(--text-light);
-    font-size: 1rem;
-    line-height: 1.8;
-    margin-bottom: 25px;
+    font-size: 0.925rem;
+    line-height: 1.7;
     font-style: italic;
 }
 
-.testimonial-author {
-    display: flex;
+.reviews-cta {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.google-review-btn {
+    display: inline-flex;
     align-items: center;
-    gap: 15px;
-}
-
-.author-avatar {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 3px solid var(--primary);
-}
-
-.author-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.author-info h4 {
-    font-size: 1rem;
+    gap: 10px;
+    padding: 14px 32px;
+    border: 2px solid #4285F4;
+    border-radius: 50px;
+    color: #fff;
     font-weight: 600;
-    color: var(--text-white);
-    margin-bottom: 3px;
+    font-size: 0.95rem;
+    transition: all var(--transition-normal);
+    text-decoration: none;
 }
 
-.author-info span {
-    font-size: 0.8125rem;
-    color: var(--text-muted);
+.google-review-btn i {
+    font-size: 1.2rem;
+    background: linear-gradient(135deg, #4285F4, #34A853, #FBBC05, #EA4335);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.google-review-btn:hover {
+    background: #4285F4;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(66, 133, 244, 0.3);
+}
+
+.google-review-btn:hover i {
+    -webkit-text-fill-color: #fff;
+    background: none;
 }
 
 /* ========================================
@@ -1472,6 +1545,91 @@ section[id] {
     margin-right: 5px;
 }
 
+/* Form Add-Ons Checkboxes */
+.addons-form-group .optional-label {
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.form-addons-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.form-addon-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    user-select: none;
+}
+
+.form-addon-item:hover {
+    border-color: rgba(225, 6, 0, 0.4);
+}
+
+.form-addon-item input[type="checkbox"] {
+    display: none;
+}
+
+.form-addon-check {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-light);
+    border-radius: 4px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.form-addon-check::after {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 0.65rem;
+    color: white;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.15s ease;
+}
+
+.form-addon-item input:checked ~ .form-addon-check {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.form-addon-item input:checked ~ .form-addon-check::after {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.form-addon-item input:checked ~ .form-addon-text {
+    color: var(--text-white);
+}
+
+.form-addon-text {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    transition: color var(--transition-fast);
+}
+
+@media (max-width: 480px) {
+    .form-addons-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* ========================================
    FINAL CTA SECTION
    ======================================== */
@@ -1491,7 +1649,7 @@ section[id] {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920') center/cover no-repeat;
+    background: url('../photos/gym overview 3.jpg') center/cover no-repeat;
     opacity: 0.1;
 }
 
@@ -1822,7 +1980,7 @@ section[id] {
     
     .services-grid,
     .plans-grid,
-    .testimonials-slider {
+    .reviews-grid {
         grid-template-columns: repeat(2, 1fr);
     }
     
@@ -1963,9 +2121,38 @@ section[id] {
         font-size: 2.5rem;
     }
     
-    .services-grid,
-    .testimonials-slider {
+    .services-grid {
         grid-template-columns: 1fr;
+    }
+
+    .reviews-grid {
+        grid-template-columns: 1fr;
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        gap: 16px;
+        padding-bottom: 12px;
+    }
+
+    .reviews-grid::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    .reviews-grid::-webkit-scrollbar-track {
+        background: var(--bg-card);
+        border-radius: 2px;
+    }
+
+    .reviews-grid::-webkit-scrollbar-thumb {
+        background: var(--primary);
+        border-radius: 2px;
+    }
+
+    .review-card {
+        min-width: 85vw;
+        scroll-snap-align: center;
+        flex-shrink: 0;
     }
     
     .plans-grid {
@@ -2140,7 +2327,7 @@ section[id] {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920');
+    background-image: url('../photos/gym overview 2.jpg');
     background-size: cover;
     background-position: center;
     z-index: -1;
@@ -2557,6 +2744,203 @@ section[id] {
     color: var(--primary);
 }
 
+/* ========================================
+   PREMIUM ADD-ON SERVICES
+   ======================================== */
+
+.premium-addons {
+    background: var(--bg-darker);
+    position: relative;
+}
+
+.premium-addons::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+}
+
+.premium-addons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 24px;
+    margin-top: 20px;
+}
+
+.premium-addon-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    background: var(--bg-card);
+    padding: 28px 24px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    transition: all var(--transition-normal);
+    position: relative;
+    cursor: pointer;
+}
+
+.premium-addon-card:hover {
+    border-color: rgba(225, 6, 0, 0.5);
+    box-shadow: 0 0 20px rgba(225, 6, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.premium-addon-card.selected {
+    border-color: var(--primary);
+    background: rgba(225, 6, 0, 0.04);
+    box-shadow: 0 0 25px rgba(225, 6, 0, 0.15);
+}
+
+/* Checkbox */
+.addon-select {
+    flex-shrink: 0;
+    padding-top: 2px;
+}
+
+.addon-select input[type="checkbox"] {
+    display: none;
+}
+
+.addon-checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--border-light);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.addon-checkbox::after {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 0.75rem;
+    color: var(--text-white);
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.2s ease;
+}
+
+.addon-select input[type="checkbox"]:checked + .addon-checkbox {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.addon-select input[type="checkbox"]:checked + .addon-checkbox::after {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.premium-addon-icon {
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, rgba(225, 6, 0, 0.15) 0%, rgba(225, 6, 0, 0.05) 100%);
+    border: 1px solid rgba(225, 6, 0, 0.2);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all var(--transition-normal);
+}
+
+.premium-addon-card.selected .premium-addon-icon {
+    background: var(--gradient-primary);
+    border-color: var(--primary);
+}
+
+.premium-addon-icon i {
+    font-size: 1.2rem;
+    color: var(--primary);
+    transition: color var(--transition-fast);
+}
+
+.premium-addon-card.selected .premium-addon-icon i {
+    color: var(--text-white);
+}
+
+.premium-addon-info {
+    flex: 1;
+}
+
+.premium-addon-info h4 {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    color: var(--text-white);
+    margin-bottom: 6px;
+}
+
+.premium-addon-info p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.premium-addon-price {
+    display: inline-block;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--primary);
+}
+
+.premium-addon-price.consultation {
+    font-style: italic;
+    color: var(--text-muted);
+    font-weight: 400;
+    font-size: 0.8rem;
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.addons-cta {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.addons-note {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.addons-note i {
+    color: var(--primary);
+    margin-right: 6px;
+}
+
+.addons-note a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.addons-note a:hover {
+    color: var(--primary-light);
+}
+
+@media (max-width: 768px) {
+    .premium-addons-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .premium-addon-card {
+        padding: 22px 18px;
+    }
+}
+
 /* Comparison Table */
 .comparison-section {
     background: var(--bg-dark);
@@ -2618,6 +3002,29 @@ section[id] {
 
 .comparison-table .cross {
     color: var(--text-dark);
+}
+
+.comparison-note {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+.comparison-note i {
+    color: var(--primary);
+    margin-right: 6px;
+}
+
+.comparison-note a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.comparison-note a:hover {
+    color: var(--primary-light);
 }
 
 /* FAQ Section */
@@ -3988,7 +4395,7 @@ body.has-announcement .page-header {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920') center/cover no-repeat;
+    background: url('../photos/gym overview.jpg') center/cover no-repeat;
 }
 
 /* Mobile fallback */

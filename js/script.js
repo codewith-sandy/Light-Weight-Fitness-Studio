@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initGalleryFilter();
     initFAQ();
     initHeroVideo();
+    initPremiumAddons();
 });
 
 /* ========================================
@@ -177,9 +178,9 @@ function initNavigation() {
 
 function initScrollAnimations() {
     const animatedElements = document.querySelectorAll(
-        '.service-card, .plan-card, .testimonial-card, .why-item, ' +
+        '.service-card, .plan-card, .review-card, .why-item, ' +
         '.about-content, .about-image, .gallery-item, .join-wrapper, ' +
-        '.contact-item, .section-header'
+        '.contact-item, .section-header, .premium-addon-card'
     );
     
     const observerOptions = {
@@ -408,12 +409,17 @@ function initFormHandler() {
         const planKey = planParts[0] || '';
         const planDisplay = planParts[1] || '';
         
+        // Get selected add-ons
+        const addonCheckboxes = form.querySelectorAll('input[name="form-addon"]:checked');
+        const selectedAddons = Array.from(addonCheckboxes).map(cb => cb.value);
+        
         return {
             name: document.getElementById('name').value.trim(),
             email: document.getElementById('email').value.trim(),
             phone: document.getElementById('phone').value.trim(),
             planKey: planKey,
             planDisplay: planDisplay,
+            addons: selectedAddons,
             message: document.getElementById('message').value.trim()
         };
     }
@@ -425,6 +431,12 @@ function initFormHandler() {
         message += `Email: ${data.email}\n`;
         message += `Phone: ${data.phone}\n`;
         message += `Selected Plan: ${data.planDisplay}\n`;
+        if (data.addons.length > 0) {
+            message += `\nSelected Add-Ons:\n`;
+            data.addons.forEach(addon => {
+                message += `  - ${addon}\n`;
+            });
+        }
         if (data.message) {
             message += `\nAdditional Message:\n${data.message}\n`;
         }
@@ -441,6 +453,12 @@ function initFormHandler() {
         message += `📧 Email: ${data.email}\n`;
         message += `📱 Phone: ${data.phone}\n`;
         message += `💳 Selected Plan: ${data.planDisplay}\n`;
+        if (data.addons.length > 0) {
+            message += `\n⭐ *Selected Add-Ons:*\n`;
+            data.addons.forEach(addon => {
+                message += `  ✅ ${addon}\n`;
+            });
+        }
         if (data.message) {
             message += `\n💬 *Additional Message:*\n${data.message}\n`;
         }
@@ -539,10 +557,9 @@ function initFormHandler() {
                 const planDisplay = planParts[1] || '';
                 
                 const autoMessages = {
-                    'basic': `I am interested in joining the Basic Plan (₹999/month). Please share further details about what's included.`,
-                    'standard': `I am interested in joining the Standard Plan (₹1499/month). Please share further details and benefits.`,
-                    'premium': `I would like to enroll in the Premium Plan (₹1999/month). Kindly provide full membership details.`,
-                    'personal': `I am interested in Personal Training. Please contact me with available trainers and pricing options.`
+                    'monthly': `I am interested in joining the Monthly Plan (₹1,000/month). Please share further details.`,
+                    'quarterly': `I am interested in joining the Quarterly Plan (₹2,400/3 months). Please share further details.`,
+                    'annual': `I would like to enroll in the Annual Plan (₹10,000/year). Kindly provide full membership details.`
                 };
                 
                 const newMessage = autoMessages[planKey] || '';
@@ -835,7 +852,7 @@ function initGalleryLightbox() {
     galleryItems.forEach(item => {
         item.addEventListener('click', () => {
             const img = item.querySelector('img');
-            const src = img.src.replace('w=400', 'w=1200').replace('w=800', 'w=1200');
+            const src = img.src;
             
             const lightbox = document.createElement('div');
             lightbox.className = 'lightbox';
@@ -972,36 +989,40 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ========================================
-   TESTIMONIALS AUTO-SCROLL (Optional)
+   REVIEWS AUTO-SCROLL (Mobile)
    ======================================== */
 
-// Uncomment to enable auto-scroll for testimonials
-/*
-function initTestimonialsAutoScroll() {
-    const slider = document.querySelector('.testimonials-slider');
-    if (!slider) return;
-    
-    let isHovered = false;
-    
-    slider.addEventListener('mouseenter', () => isHovered = true);
-    slider.addEventListener('mouseleave', () => isHovered = false);
-    
-    setInterval(() => {
-        if (!isHovered && window.innerWidth < 768) {
-            slider.scrollBy({
-                left: slider.offsetWidth,
-                behavior: 'smooth'
-            });
-            
-            if (slider.scrollLeft >= slider.scrollWidth - slider.offsetWidth) {
-                slider.scrollTo({ left: 0, behavior: 'smooth' });
+function initReviewsAutoScroll() {
+    const grids = document.querySelectorAll('.reviews-grid');
+    grids.forEach(grid => {
+        if (!grid) return;
+        
+        let isHovered = false;
+        let isTouching = false;
+        
+        grid.addEventListener('mouseenter', () => isHovered = true);
+        grid.addEventListener('mouseleave', () => isHovered = false);
+        grid.addEventListener('touchstart', () => isTouching = true, { passive: true });
+        grid.addEventListener('touchend', () => {
+            isTouching = false;
+        }, { passive: true });
+        
+        setInterval(() => {
+            if (!isHovered && !isTouching && window.innerWidth < 768) {
+                const cardWidth = grid.querySelector('.review-card')?.offsetWidth || grid.offsetWidth;
+                const gap = 16;
+                
+                if (grid.scrollLeft >= grid.scrollWidth - grid.offsetWidth - 10) {
+                    grid.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    grid.scrollBy({ left: cardWidth + gap, behavior: 'smooth' });
+                }
             }
-        }
-    }, 4000);
+        }, 4000);
+    });
 }
 
-initTestimonialsAutoScroll();
-*/
+initReviewsAutoScroll();
 
 /* ========================================
    TYPING EFFECT FOR HERO (Optional)
@@ -1124,6 +1145,70 @@ function initFAQ() {
     // Open first FAQ item by default
     if (faqItems.length > 0) {
         faqItems[0].classList.add('active');
+    }
+}
+
+/* ========================================
+   PREMIUM ADD-ONS (Plans Page)
+   ======================================== */
+
+function initPremiumAddons() {
+    const addonCards = document.querySelectorAll('.premium-addon-card');
+    
+    if (!addonCards.length) return;
+    
+    addonCards.forEach(card => {
+        const checkbox = card.querySelector('input[type="checkbox"]');
+        
+        // Toggle card selection when clicking anywhere on the card
+        card.addEventListener('click', (e) => {
+            // Don't double-toggle if clicking the actual checkbox/label
+            if (e.target.tagName === 'INPUT' || e.target.classList.contains('addon-checkbox')) {
+                // Checkbox state already changed by browser; just sync the card class
+                syncCardState(card, checkbox);
+                return;
+            }
+            checkbox.checked = !checkbox.checked;
+            syncCardState(card, checkbox);
+        });
+        
+        // Also sync on direct checkbox change
+        checkbox.addEventListener('change', () => {
+            syncCardState(card, checkbox);
+        });
+    });
+    
+    function syncCardState(card, checkbox) {
+        if (checkbox.checked) {
+            card.classList.add('selected');
+        } else {
+            card.classList.remove('selected');
+        }
+        // Save selections to localStorage so contact page can read them
+        saveAddonSelections();
+    }
+    
+    function saveAddonSelections() {
+        const checked = document.querySelectorAll('.premium-addon-card input[type="checkbox"]:checked');
+        const selectedAddons = Array.from(checked).map(cb => cb.value);
+        localStorage.setItem('selectedAddons', JSON.stringify(selectedAddons));
+    }
+    
+    // On contact page, pre-check add-ons from localStorage
+    const formAddonCheckboxes = document.querySelectorAll('input[name="form-addon"]');
+    if (formAddonCheckboxes.length > 0) {
+        try {
+            const savedAddons = JSON.parse(localStorage.getItem('selectedAddons') || '[]');
+            if (savedAddons.length > 0) {
+                formAddonCheckboxes.forEach(cb => {
+                    if (savedAddons.includes(cb.value)) {
+                        cb.checked = true;
+                    }
+                });
+            }
+        } catch (e) {
+            // Silently ignore if localStorage is unavailable
+        }
     }
 }
 

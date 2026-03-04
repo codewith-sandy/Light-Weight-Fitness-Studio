@@ -139,7 +139,7 @@
                             </div>
                             <div class="contact-text">
                                 <h4>Directions</h4>
-                                <p><a href="https://maps.google.com/?q=Light+Weight+Fitness+Gym+New+Vellanur" target="_blank">View on Google Maps</a></p>
+                                <p><a href="https://www.google.com/maps/place/Light+Weight+Fitness+Studio/@13.1712469,80.0941558,18.04z/data=!4m14!1m7!3m6!1s0x3a528740de9f839b:0xdc8b44c1aba6809!2sLight+Weight+Fitness+Gym!8m2!3d13.170062!4d80.0958278!16s%2Fg%2F11t6x6mhxn!3m5!1s0x3a527d7e964dfa81:0xacef858c2155cd9!8m2!3d13.1707944!4d80.099584!16s%2Fg%2F11l36ks_9v" target="_blank">View on Google Maps</a></p>
                             </div>
                         </div>
                     </div>
@@ -154,7 +154,7 @@
                 
                 <div class="contact-map">
                     <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3885.9!2d80.0856!3d13.1548!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5265b77f85b555%3A0x8b0dc5a54e1c3d1a!2sNew%20Vellanur%2C%20Tamil%20Nadu%20600077!5e0!3m2!1sen!2sin!4v1709475840000!5m2!1sen!2sin"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d971.5!2d80.099584!3d13.1707944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a527d7e964dfa81%3A0xacef858c2155cd9!2sLight%20Weight%20Fitness%20Studio!5e0!3m2!1sen!2sin!4v1709475840000!5m2!1sen!2sin"
                         width="100%" 
                         height="100%" 
                         style="border:0;" 
@@ -222,16 +222,55 @@
                         <span class="field-error" id="phone-error"></span>
                     </div>
                     <div class="form-group">
-                        <label for="plan">Select Plan / Service *</label>
+                        <label for="plan">Select Plan *</label>
                         <select id="plan" name="plan" required>
                             <option value="">Choose your preferred plan</option>
-                            <option value="basic|Basic Plan – ₹999/month">Basic Plan – ₹999/month</option>
-                            <option value="standard|Standard Plan – ₹1499/month">Standard Plan – ₹1499/month</option>
-                            <option value="premium|Premium Plan – ₹1999/month">Premium Plan – ₹1999/month</option>
-                            <option value="personal|Personal Training (Custom Pricing)">Personal Training (Custom Pricing)</option>
+                            <option value="monthly|Monthly Plan – ₹1,000/month">Monthly Plan – ₹1,000/month</option>
+                            <option value="quarterly|Quarterly Plan – ₹2,400/3 months">Quarterly Plan – ₹2,400/3 months</option>
+                            <option value="annual|Annual Plan – ₹10,000/year">Annual Plan – ₹10,000/year</option>
                         </select>
                         <span class="field-error" id="plan-error"></span>
                         <span class="field-hint">Selecting a plan will auto-generate a message below.</span>
+                    </div>
+                    <div class="form-group addons-form-group">
+                        <label>Premium Add-Ons <span class="optional-label">(Optional)</span></label>
+                        <div class="form-addons-grid">
+                            <label class="form-addon-item">
+                                <input type="checkbox" name="form-addon" value="Personal Training">
+                                <span class="form-addon-check"></span>
+                                <span class="form-addon-text">Personal Training</span>
+                            </label>
+                            <label class="form-addon-item">
+                                <input type="checkbox" name="form-addon" value="Custom Diet Plan">
+                                <span class="form-addon-check"></span>
+                                <span class="form-addon-text">Custom Diet Plan</span>
+                            </label>
+                            <label class="form-addon-item">
+                                <input type="checkbox" name="form-addon" value="Progress Tracking">
+                                <span class="form-addon-check"></span>
+                                <span class="form-addon-text">Progress Tracking</span>
+                            </label>
+                            <label class="form-addon-item">
+                                <input type="checkbox" name="form-addon" value="Shower Access">
+                                <span class="form-addon-check"></span>
+                                <span class="form-addon-text">Shower Access</span>
+                            </label>
+                            <label class="form-addon-item">
+                                <input type="checkbox" name="form-addon" value="Supplements Package">
+                                <span class="form-addon-check"></span>
+                                <span class="form-addon-text">Supplements Package</span>
+                            </label>
+                            <label class="form-addon-item">
+                                <input type="checkbox" name="form-addon" value="Fitness Assessment">
+                                <span class="form-addon-check"></span>
+                                <span class="form-addon-text">Fitness Assessment</span>
+                            </label>
+                            <label class="form-addon-item">
+                                <input type="checkbox" name="form-addon" value="Priority Booking">
+                                <span class="form-addon-check"></span>
+                                <span class="form-addon-text">Priority Booking</span>
+                            </label>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="message">Message (Optional)</label>
@@ -298,8 +337,115 @@
                     </div>
                 </div>
                 <div class="trial-image">
-                    <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600" alt="Free Trial Session" loading="lazy">
+                    <img src="photos/gym outside.jpg" alt="Light Weight Fitness Gym - Book Your Free Trial" loading="lazy">
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Google Reviews Section -->
+    <section class="google-reviews section" id="reviews">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag"><i class="fab fa-google"></i> Google Reviews</span>
+                <h2 class="section-title">TRUSTED BY OUR <span class="text-accent">MEMBERS</span></h2>
+                <p class="section-subtitle">Real experiences from real transformations</p>
+                <div class="overall-rating">
+                    <div class="rating-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <span class="rating-value">4.8</span>
+                    <span class="rating-count">Based on 31 reviews</span>
+                </div>
+            </div>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar" style="background: linear-gradient(135deg, #E10600, #ff4136);"><span>SD</span></div>
+                        <div class="reviewer-info">
+                            <h4>Shriram D</h4>
+                            <div class="review-meta">
+                                <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                <span class="review-source"><i class="fab fa-google"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="review-text">"One of the best gym I've been to, excellent service and the manager is very cool 10 out of 10!"</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar" style="background: linear-gradient(135deg, #1a73e8, #4fc3f7);"><span>GP</span></div>
+                        <div class="reviewer-info">
+                            <h4>Goutham Pintu</h4>
+                            <div class="review-meta">
+                                <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                <span class="review-source"><i class="fab fa-google"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="review-text">"It's really a good gym. It has good equipment, good training, and the trainer is supportive and encouraging."</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar" style="background: linear-gradient(135deg, #34a853, #66bb6a);"><span>DK</span></div>
+                        <div class="reviewer-info">
+                            <h4>Deena Kumar</h4>
+                            <div class="review-meta">
+                                <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                <span class="review-source"><i class="fab fa-google"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="review-text">"This gym provides an exceptional fitness experience with top-notch equipment and professional trainers."</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar" style="background: linear-gradient(135deg, #e040fb, #ce93d8);"><span>PP</span></div>
+                        <div class="reviewer-info">
+                            <h4>Priyanka Pradeep</h4>
+                            <div class="review-meta">
+                                <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                <span class="review-source"><i class="fab fa-google"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="review-text">"Great atmosphere and friendly staff. Loved the clean environment and variety of equipment. Highly recommend for women too!"</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar" style="background: linear-gradient(135deg, #ff6d00, #ffab40);"><span>DK</span></div>
+                        <div class="reviewer-info">
+                            <h4>Dinesh Karan</h4>
+                            <div class="review-meta">
+                                <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                <span class="review-source"><i class="fab fa-google"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="review-text">"Been training here for months and my transformation has been incredible. The personal attention you get here is unmatched."</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar" style="background: linear-gradient(135deg, #7c4dff, #b388ff);"><span>BK</span></div>
+                        <div class="reviewer-info">
+                            <h4>Bala Krishnan</h4>
+                            <div class="review-meta">
+                                <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                <span class="review-source"><i class="fab fa-google"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="review-text">"A hidden gem! Great community feeling, excellent equipment variety, and the trainer pushes you to your limits in the best way."</p>
+                </div>
+            </div>
+            <div class="reviews-cta">
+                <a href="https://www.google.com/maps/place/Light+Weight+Fitness+Studio/@13.1712469,80.0941558,18.04z/data=!4m14!1m7!3m6!1s0x3a528740de9f839b:0xdc8b44c1aba6809!2sLight+Weight+Fitness+Gym!8m2!3d13.170062!4d80.0958278!16s%2Fg%2F11t6x6mhxn!3m5!1s0x3a527d7e964dfa81:0xacef858c2155cd9!8m2!3d13.1707944!4d80.099584!16s%2Fg%2F11l36ks_9v" target="_blank" class="google-review-btn">
+                    <i class="fab fa-google"></i> View All Reviews on Google
+                </a>
             </div>
         </div>
     </section>
@@ -329,7 +475,7 @@
                     <h4>Email Us</h4>
                     <p>lightweightfitnessgym@gmail.com</p>
                 </a>
-                <a href="https://maps.google.com/?q=Light+Weight+Fitness+Gym+New+Vellanur" target="_blank" class="quick-card">
+                <a href="https://www.google.com/maps/place/Light+Weight+Fitness+Studio/@13.1712469,80.0941558,18.04z/data=!4m14!1m7!3m6!1s0x3a528740de9f839b:0xdc8b44c1aba6809!2sLight+Weight+Fitness+Gym!8m2!3d13.170062!4d80.0958278!16s%2Fg%2F11t6x6mhxn!3m5!1s0x3a527d7e964dfa81:0xacef858c2155cd9!8m2!3d13.1707944!4d80.099584!16s%2Fg%2F11l36ks_9v" target="_blank" class="quick-card">
                     <div class="quick-card-icon">
                         <i class="fas fa-directions"></i>
                     </div>
@@ -414,7 +560,7 @@
                             </span>
                         </li>
                         <li>
-                            <a href="https://maps.google.com/?q=Light+Weight+Fitness+Gym+New+Vellanur" target="_blank" class="maps-link">
+                            <a href="https://www.google.com/maps/place/Light+Weight+Fitness+Studio/@13.1712469,80.0941558,18.04z/data=!4m14!1m7!3m6!1s0x3a528740de9f839b:0xdc8b44c1aba6809!2sLight+Weight+Fitness+Gym!8m2!3d13.170062!4d80.0958278!16s%2Fg%2F11t6x6mhxn!3m5!1s0x3a527d7e964dfa81:0xacef858c2155cd9!8m2!3d13.1707944!4d80.099584!16s%2Fg%2F11l36ks_9v" target="_blank" class="maps-link">
                                 <i class="fas fa-directions"></i>
                                 <span>View on Google Maps</span>
                             </a>
